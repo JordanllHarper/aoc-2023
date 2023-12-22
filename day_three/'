@@ -1,0 +1,65 @@
+use std::fs::read_to_string;
+
+use util::create_2d_grid;
+
+use crate::{
+    models::Part,
+    util::{get_numbers_in_line, get_symbols_in_line},
+};
+
+mod models;
+mod util;
+fn main() {
+    let input = read_lines("input.txt");
+    let output = part_one(input);
+    // println!("{}", output);
+}
+
+fn part_one(input: Vec<String>) -> i32 {
+    // let schematic = input.iter().map(|line| build_vector_schematic(line));
+    let first = input.first().unwrap();
+    let grid = create_2d_grid(input);
+
+    for (y, element) in grid.into_iter().enumerate() {
+        let symbols = get_symbols_in_line(element.clone(), y);
+        let numbers = get_numbers_in_line(element, y);
+        println!("{:?}", symbols);
+    }
+    1
+}
+
+// TODO:
+// fn part_two(input: Vec<String>) {
+//     todo!()
+// }
+
+fn read_lines(filename: &str) -> Vec<String> {
+    let mut result = Vec::new();
+
+    for line in read_to_string(filename).unwrap().lines() {
+        result.push(line.to_string())
+    }
+
+    result
+}
+#[cfg(test)]
+mod tests {
+    use crate::part_one;
+
+    #[test]
+    fn part_one_test() {
+        let data= "467..114..\n...*......\n..35..633.\n......#...\n617*......\n.....+.58.\n..592.....\n......755.\n...$.*....\n.664.598..";
+        let expected = 4361;
+        let actual = part_one(
+            data.lines()
+                .map(|line| line.to_string())
+                .collect::<Vec<String>>(),
+        );
+        assert_eq!(expected, actual);
+    }
+    // TODO:
+    // #[test]
+    // fn part_two_test() {
+    //     unimplemented!();
+    // }
+}

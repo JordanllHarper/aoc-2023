@@ -1,0 +1,58 @@
+use std::fs::read_to_string;
+
+use parser::parse_to_models;
+use solve::{count_simul_steps, count_steps};
+
+mod models;
+mod parser;
+mod solve;
+fn main() {
+    let input = read_stream("input.txt");
+    let output = part_two(&input);
+    println!("{}", output);
+}
+
+fn part_one(input: &str) -> u32 {
+    let map = parse_to_models(input);
+    count_steps(map)
+}
+
+// TODO:
+fn part_two(input: &str) -> u64 {
+    let map = parse_to_models(input);
+    count_simul_steps(map)
+}
+
+fn read_stream(filename: &str) -> String {
+    read_to_string(filename).unwrap()
+}
+fn read_lines(filename: &str) -> Vec<String> {
+    let mut result = Vec::new();
+
+    for line in read_to_string(filename).unwrap().lines() {
+        result.push(line.to_string())
+    }
+
+    result
+}
+#[cfg(test)]
+mod tests {
+
+    use crate::part_one;
+    use crate::part_two;
+    #[test]
+    fn part_one_test() {
+        let data = "RL\n\nAAA = (BBB, CCC)\nBBB = (DDD, EEE)\nCCC = (ZZZ, GGG)\nDDD = (DDD, DDD)\nEEE = (EEE, EEE)\nGGG = (GGG, GGG)\nZZZ = (ZZZ, ZZZ)";
+        let expected = 2;
+        let actual = part_one(data);
+        assert_eq!(expected, actual);
+    }
+    // TODO:
+    #[test]
+    fn part_two_test() {
+        let data = "LR\n\n11A = (11B, XXX)\n11B = (XXX, 11Z)\n11Z = (11B, XXX)\n22A = (22B, XXX)\n22B = (22C, 22C)\n22C = (22Z, 22Z)\n22Z = (22B, 22B)\nXXX = (XXX, XXX)";
+        let expected = 6;
+        let actual = part_two(data);
+        assert_eq!(expected, actual);
+    }
+}

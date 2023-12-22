@@ -1,0 +1,16 @@
+pub struct ItemToItem {
+    type : 
+    first_line: Vec<i32>,
+    second_line: Vec<i32>,
+}
+
+
+pub enum MapType{
+    SeedToSoil,
+    SoilToFertilizer,
+    FertilizerToWater,
+    WaterToLight,
+    LightToTemperature,
+    TemperatureToHumidity
+    HumidityToLocation
+}
